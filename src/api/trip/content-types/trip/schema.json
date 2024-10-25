@@ -1,0 +1,73 @@
+{
+  "kind": "collectionType",
+  "collectionName": "trips",
+  "info": {
+    "singularName": "trip",
+    "pluralName": "trips",
+    "displayName": "Trip",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "departureLocation": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "arrivalLocation": {
+      "type": "string"
+    },
+    "distance": {
+      "type": "string",
+      "required": true
+    },
+    "travelTime": {
+      "type": "string",
+      "required": true
+    },
+    "departureTime": {
+      "type": "datetime"
+    },
+    "arrivalTime": {
+      "type": "datetime"
+    },
+    "ticket": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ticket.ticket",
+      "inversedBy": "trips"
+    },
+    "ticket_price": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ticket-price.ticket-price",
+      "inversedBy": "trips"
+    },
+    "seat": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::seat.seat",
+      "inversedBy": "trips"
+    },
+    "pickup_point": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::pickup-point.pickup-point",
+      "inversedBy": "trips"
+    },
+    "drop_off_point": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::drop-off-point.drop-off-point",
+      "inversedBy": "trips"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["ACTIVE", "UNACTIVE", "EXPIRED", "CANCELLED"],
+      "default": "ACTIVE"
+    }
+  }
+}

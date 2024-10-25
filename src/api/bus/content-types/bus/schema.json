@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "buses",
+  "info": {
+    "singularName": "bus",
+    "pluralName": "buses",
+    "displayName": "Bus"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "busName": {
+      "type": "string",
+      "required": true
+    },
+    "busType": {
+      "type": "enumeration",
+      "enum": [
+        "Giường nằm",
+        "Ghế ngồi"
+      ],
+      "required": true
+    },
+    "seatCount": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "active",
+        "inactive"
+      ]
+    },
+    "seats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::seat.seat",
+      "mappedBy": "bus"
+    }
+  }
+}

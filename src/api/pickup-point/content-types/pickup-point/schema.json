@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pickup_points",
+  "info": {
+    "singularName": "pickup-point",
+    "pluralName": "pickup-points",
+    "displayName": "PickupPoint",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "location": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "trips": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::trip.trip",
+      "mappedBy": "pickup_point"
+    }
+  }
+}
