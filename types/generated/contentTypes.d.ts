@@ -864,6 +864,42 @@ export interface ApiDropOffPointDropOffPoint extends Schema.CollectionType {
   };
 }
 
+export interface ApiLocationLocation extends Schema.CollectionType {
+  collectionName: 'locations';
+  info: {
+    singularName: 'location';
+    pluralName: 'locations';
+    displayName: ' Location';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    description: Attribute.Text;
+    trips: Attribute.Relation<
+      'api::location.location',
+      'oneToMany',
+      'api::trip.trip'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::location.location',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::location.location',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiPaymentPayment extends Schema.CollectionType {
   collectionName: 'payments';
   info: {
@@ -1029,8 +1065,13 @@ export interface ApiTicketTicket extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    price: Attribute.Decimal;
-    status: Attribute.Enumeration<['booked', 'canceled', 'completed']>;
+    status: Attribute.Enumeration<
+      [
+        'C\u00F3 s\u1EB5n',
+        '\u0110\u00E3 b\u00E1n',
+        '\u0110\u00E3 \u0111\u1EB7t tr\u01B0\u1EDBc'
+      ]
+    >;
     seat: Attribute.Relation<
       'api::ticket.ticket',
       'manyToOne',
@@ -1050,6 +1091,11 @@ export interface ApiTicketTicket extends Schema.CollectionType {
       'api::ticket.ticket',
       'oneToMany',
       'api::trip.trip'
+    >;
+    ticket_prices: Attribute.Relation<
+      'api::ticket.ticket',
+      'oneToMany',
+      'api::ticket-price.ticket-price'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1095,6 +1141,11 @@ export interface ApiTicketPriceTicketPrice extends Schema.CollectionType {
       'oneToMany',
       'api::trip.trip'
     >;
+    ticket: Attribute.Relation<
+      'api::ticket-price.ticket-price',
+      'manyToOne',
+      'api::ticket.ticket'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1125,8 +1176,6 @@ export interface ApiTripTrip extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    departureLocation: Attribute.String & Attribute.Required;
-    arrivalLocation: Attribute.String;
     distance: Attribute.String & Attribute.Required;
     travelTime: Attribute.String & Attribute.Required;
     departureTime: Attribute.DateTime;
@@ -1153,9 +1202,23 @@ export interface ApiTripTrip extends Schema.CollectionType {
       'api::drop-off-point.drop-off-point'
     >;
     status: Attribute.Enumeration<
-      ['ACTIVE', 'UNACTIVE', 'EXPIRED', 'CANCELLED']
-    > &
-      Attribute.DefaultTo<'ACTIVE'>;
+      [
+        'HO\u1EA0T \u0110\u1ED8NG',
+        'KH\u00D4NG HO\u1EA0T \u0110\u1ED8NG',
+        'H\u1EBET H\u1EA0N',
+        'H\u1EE6Y'
+      ]
+    >;
+    departure_location_id: Attribute.Relation<
+      'api::trip.trip',
+      'manyToOne',
+      'api::location.location'
+    >;
+    arrival_location_id: Attribute.Relation<
+      'api::trip.trip',
+      'manyToOne',
+      'api::location.location'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1186,6 +1249,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::bus.bus': ApiBusBus;
       'api::drop-off-point.drop-off-point': ApiDropOffPointDropOffPoint;
+      'api::location.location': ApiLocationLocation;
       'api::payment.payment': ApiPaymentPayment;
       'api::pickup-point.pickup-point': ApiPickupPointPickupPoint;
       'api::promotion.promotion': ApiPromotionPromotion;

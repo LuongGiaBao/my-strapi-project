@@ -40,6 +40,12 @@
       "relation": "oneToMany",
       "target": "api::trip.trip",
       "mappedBy": "ticket_price"
+    },
+    "ticket": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ticket.ticket",
+      "inversedBy": "ticket_prices"
     }
   }
 }

@@ -12,15 +12,12 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "price": {
-      "type": "decimal"
-    },
     "status": {
       "type": "enumeration",
       "enum": [
-        "booked",
-        "canceled",
-        "completed"
+        "Có sẵn",
+        "Đã bán",
+        "Đã đặt trước"
       ]
     },
     "seat": {
@@ -45,6 +42,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::trip.trip",
+      "mappedBy": "ticket"
+    },
+    "ticket_prices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ticket-price.ticket-price",
       "mappedBy": "ticket"
     }
   }

@@ -12,14 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "departureLocation": {
-      "type": "string",
-      "required": true,
-      "unique": false
-    },
-    "arrivalLocation": {
-      "type": "string"
-    },
     "distance": {
       "type": "string",
       "required": true
@@ -66,8 +58,24 @@
     },
     "status": {
       "type": "enumeration",
-      "enum": ["ACTIVE", "UNACTIVE", "EXPIRED", "CANCELLED"],
-      "default": "ACTIVE"
+      "enum": [
+        "HOẠT ĐỘNG",
+        "KHÔNG HOẠT ĐỘNG",
+        "HẾT HẠN",
+        "HỦY"
+      ]
+    },
+    "departure_location_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location",
+      "inversedBy": "trips"
+    },
+    "arrival_location_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::location.location",
+      "inversedBy": "trips"
     }
   }
 }
