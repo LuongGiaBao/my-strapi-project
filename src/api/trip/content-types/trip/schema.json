@@ -32,12 +32,6 @@
       "target": "api::ticket.ticket",
       "inversedBy": "trips"
     },
-    "ticket_price": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::ticket-price.ticket-price",
-      "inversedBy": "trips"
-    },
     "seat": {
       "type": "relation",
       "relation": "manyToOne",

@@ -1136,11 +1136,6 @@ export interface ApiTicketPriceTicketPrice extends Schema.CollectionType {
       'manyToOne',
       'api::promotion.promotion'
     >;
-    trips: Attribute.Relation<
-      'api::ticket-price.ticket-price',
-      'oneToMany',
-      'api::trip.trip'
-    >;
     ticket: Attribute.Relation<
       'api::ticket-price.ticket-price',
       'manyToOne',
@@ -1184,11 +1179,6 @@ export interface ApiTripTrip extends Schema.CollectionType {
       'api::trip.trip',
       'manyToOne',
       'api::ticket.ticket'
-    >;
-    ticket_price: Attribute.Relation<
-      'api::trip.trip',
-      'manyToOne',
-      'api::ticket-price.ticket-price'
     >;
     seat: Attribute.Relation<'api::trip.trip', 'manyToOne', 'api::seat.seat'>;
     pickup_point: Attribute.Relation<
