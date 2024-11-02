@@ -9,8 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -76,6 +75,18 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::payment.payment",
+      "mappedBy": "users_permissions_user"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "fullName": {
+      "type": "string"
+    },
+    "invoices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice.invoice",
       "mappedBy": "users_permissions_user"
     }
   }

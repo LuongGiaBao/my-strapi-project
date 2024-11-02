@@ -12,52 +12,74 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "distance": {
-      "type": "string",
-      "required": true
-    },
-    "travelTime": {
-      "type": "string",
-      "required": true
-    },
-    "departureTime": {
-      "type": "datetime"
-    },
-    "arrivalTime": {
-      "type": "datetime"
-    },
     "ticket": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::ticket.ticket",
       "inversedBy": "trips"
     },
-    "seat": {
+    "seats": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToMany",
       "target": "api::seat.seat",
-      "inversedBy": "trips"
-    },
-    "pickup_point": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::pickup-point.pickup-point",
-      "inversedBy": "trips"
-    },
-    "drop_off_point": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::drop-off-point.drop-off-point",
-      "inversedBy": "trips"
+      "mappedBy": "trip"
     },
     "status": {
       "type": "enumeration",
       "enum": [
-        "HOẠT ĐỘNG",
-        "KHÔNG HOẠT ĐỘNG",
-        "HẾT HẠN",
-        "HỦY"
-      ]
+        "Hoạt động",
+        "Ngưng hoạt động"
+      ],
+      "required": true
+    },
+    "totalSeats": {
+      "type": "integer",
+      "default": 34
+    },
+    "invoices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice.invoice",
+      "mappedBy": "trip"
+    },
+    "ExpectedTime": {
+      "type": "time",
+      "required": true
+    },
+    "detail_promotions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::detail-promotion.detail-promotion",
+      "mappedBy": "trip"
+    },
+    "MaTuyen": {
+      "type": "string",
+      "default": "MT",
+      "required": true
+    },
+    "schedules": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::schedule.schedule",
+      "mappedBy": "MaTuyen"
+    },
+    "detai_prices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::detai-price.detai-price",
+      "mappedBy": "trip"
+    },
+    "MaDiemDon": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::pickup-point.pickup-point",
+      "inversedBy": "MaTuyen"
+    },
+    "MaDiemTra": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::drop-off-point.drop-off-point",
+      "inversedBy": "MaTuyen"
     },
     "departure_location_id": {
       "type": "relation",

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "promotion",
     "pluralName": "promotions",
-    "displayName": "Promotion"
+    "displayName": "Promotion",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -22,8 +23,8 @@
     "discountType": {
       "type": "enumeration",
       "enum": [
-        "percentage",
-        "fixed"
+        "Tặng tiền",
+        "Chiết khấu hóa đơn"
       ],
       "required": true
     },
@@ -39,16 +40,20 @@
     "status": {
       "type": "enumeration",
       "enum": [
-        "ACTIVE",
-        "INACTIVE",
-        "EXPIRED"
+        "Hoạt động",
+        "Không hoạt động"
       ],
-      "required": true
+      "required": true,
+      "default": "Hoạt động"
     },
-    "ticket_prices": {
+    "IDPromotion": {
+      "type": "string",
+      "default": "MK"
+    },
+    "detail_promotions": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::ticket-price.ticket-price",
+      "target": "api::detail-promotion.detail-promotion",
       "mappedBy": "promotion"
     }
   }

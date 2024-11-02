@@ -13,21 +13,17 @@
   "pluginOptions": {},
   "attributes": {
     "seatNumber": {
-      "type": "integer"
+      "type": "integer",
+      "unique": true,
+      "required": true
     },
     "status": {
       "type": "enumeration",
       "enum": [
-        "available",
-        "reserved",
-        "booked"
+        "còn trống",
+        "đang chọn",
+        "đã bán"
       ]
-    },
-    "bus": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::bus.bus",
-      "inversedBy": "seats"
     },
     "tickets": {
       "type": "relation",
@@ -35,11 +31,17 @@
       "target": "api::ticket.ticket",
       "mappedBy": "seat"
     },
-    "trips": {
+    "trip": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToOne",
       "target": "api::trip.trip",
-      "mappedBy": "seat"
+      "inversedBy": "seats"
+    },
+    "invoices": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::invoice.invoice",
+      "mappedBy": "seats"
     }
   }
 }

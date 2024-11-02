@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "invoices",
+  "info": {
+    "singularName": "invoice",
+    "pluralName": "invoices",
+    "displayName": "Invoice",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "totalAmount": {
+      "type": "decimal",
+      "required": true,
+      "unique": false
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "hoàn thành",
+        "đang xử lý",
+        "hủy"
+      ]
+    },
+    "transactionId": {
+      "type": "string"
+    },
+    "paidAt": {
+      "type": "datetime"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "payment": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::payment.payment",
+      "inversedBy": "invoices"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "invoices"
+    },
+    "trip": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::trip.trip",
+      "inversedBy": "invoices"
+    },
+    "seats": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::seat.seat",
+      "inversedBy": "invoices"
+    },
+    "invoiceNumber": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

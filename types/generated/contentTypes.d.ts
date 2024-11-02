@@ -742,7 +742,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -781,6 +780,13 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::payment.payment'
     >;
+    phone: Attribute.String;
+    fullName: Attribute.String;
+    invoices: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::invoice.invoice'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -804,25 +810,147 @@ export interface ApiBusBus extends Schema.CollectionType {
     singularName: 'bus';
     pluralName: 'buses';
     displayName: 'Bus';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    busName: Attribute.String & Attribute.Required;
-    busType: Attribute.Enumeration<
-      ['Gi\u01B0\u1EDDng n\u1EB1m', 'Gh\u1EBF ng\u1ED3i']
-    > &
-      Attribute.Required;
+    BienSo: Attribute.String & Attribute.Required & Attribute.DefaultTo<'BS'>;
     seatCount: Attribute.Integer;
-    status: Attribute.Enumeration<['active', 'inactive']>;
-    seats: Attribute.Relation<'api::bus.bus', 'oneToMany', 'api::seat.seat'>;
+    status: Attribute.Enumeration<
+      ['Ho\u1EA1t \u0111\u1ED9ng', 'Kh\u00F4ng ho\u1EA1t \u0111\u1ED9ng']
+    >;
+    busName: Attribute.String & Attribute.Required;
+    schedules: Attribute.Relation<
+      'api::bus.bus',
+      'oneToMany',
+      'api::schedule.schedule'
+    >;
+    MaXe: Attribute.String & Attribute.Required & Attribute.DefaultTo<'MX'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::bus.bus', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::bus.bus', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCustomerCustomer extends Schema.CollectionType {
+  collectionName: 'customers';
+  info: {
+    singularName: 'customer';
+    pluralName: 'customers';
+    displayName: 'Customer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    MaKH: Attribute.String & Attribute.Required & Attribute.DefaultTo<'MKH'>;
+    TenKH: Attribute.String & Attribute.Required;
+    Email: Attribute.String;
+    DienThoai: Attribute.Integer;
+    DiaChi: Attribute.String;
+    GioiTinh: Attribute.Enumeration<['Nam', 'N\u1EEF']>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::customer.customer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::customer.customer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDetaiPriceDetaiPrice extends Schema.CollectionType {
+  collectionName: 'detai_prices';
+  info: {
+    singularName: 'detai-price';
+    pluralName: 'detai-prices';
+    displayName: 'DetaiPrice';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    MaChiTietGia: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'MCTG'>;
+    Gia: Attribute.String & Attribute.Required;
+    trip: Attribute.Relation<
+      'api::detai-price.detai-price',
+      'manyToOne',
+      'api::trip.trip'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::detai-price.detai-price',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::detai-price.detai-price',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDetailPromotionDetailPromotion
+  extends Schema.CollectionType {
+  collectionName: 'detail_promotions';
+  info: {
+    singularName: 'detail-promotion';
+    pluralName: 'detail-promotions';
+    displayName: 'DetailPromotion';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    MaChiTietKhuyenMai: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'MCTKM'>;
+    promotion: Attribute.Relation<
+      'api::detail-promotion.detail-promotion',
+      'manyToOne',
+      'api::promotion.promotion'
+    >;
+    trip: Attribute.Relation<
+      'api::detail-promotion.detail-promotion',
+      'manyToOne',
+      'api::trip.trip'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::detail-promotion.detail-promotion',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::detail-promotion.detail-promotion',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -841,11 +969,14 @@ export interface ApiDropOffPointDropOffPoint extends Schema.CollectionType {
   attributes: {
     location: Attribute.String & Attribute.Required;
     address: Attribute.String & Attribute.Required;
-    trips: Attribute.Relation<
+    MaTuyen: Attribute.Relation<
       'api::drop-off-point.drop-off-point',
       'oneToMany',
       'api::trip.trip'
     >;
+    MaDiemTra: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'MDP'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -864,12 +995,71 @@ export interface ApiDropOffPointDropOffPoint extends Schema.CollectionType {
   };
 }
 
+export interface ApiInvoiceInvoice extends Schema.CollectionType {
+  collectionName: 'invoices';
+  info: {
+    singularName: 'invoice';
+    pluralName: 'invoices';
+    displayName: 'Invoice';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    totalAmount: Attribute.Decimal & Attribute.Required;
+    status: Attribute.Enumeration<
+      ['ho\u00E0n th\u00E0nh', '\u0111ang x\u1EED l\u00FD', 'h\u1EE7y']
+    >;
+    transactionId: Attribute.String;
+    paidAt: Attribute.DateTime;
+    notes: Attribute.String;
+    payment: Attribute.Relation<
+      'api::invoice.invoice',
+      'manyToOne',
+      'api::payment.payment'
+    >;
+    users_permissions_user: Attribute.Relation<
+      'api::invoice.invoice',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    trip: Attribute.Relation<
+      'api::invoice.invoice',
+      'manyToOne',
+      'api::trip.trip'
+    >;
+    seats: Attribute.Relation<
+      'api::invoice.invoice',
+      'manyToMany',
+      'api::seat.seat'
+    >;
+    invoiceNumber: Attribute.String & Attribute.Required & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::invoice.invoice',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::invoice.invoice',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiLocationLocation extends Schema.CollectionType {
   collectionName: 'locations';
   info: {
     singularName: 'location';
     pluralName: 'locations';
     displayName: ' Location';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -924,6 +1114,11 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    invoices: Attribute.Relation<
+      'api::payment.payment',
+      'oneToMany',
+      'api::invoice.invoice'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -956,11 +1151,14 @@ export interface ApiPickupPointPickupPoint extends Schema.CollectionType {
   attributes: {
     location: Attribute.String & Attribute.Required;
     address: Attribute.String & Attribute.Required;
-    trips: Attribute.Relation<
+    MaTuyen: Attribute.Relation<
       'api::pickup-point.pickup-point',
       'oneToMany',
       'api::trip.trip'
     >;
+    MaDiemDon: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'MPP'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -985,6 +1183,7 @@ export interface ApiPromotionPromotion extends Schema.CollectionType {
     singularName: 'promotion';
     pluralName: 'promotions';
     displayName: 'Promotion';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -992,17 +1191,23 @@ export interface ApiPromotionPromotion extends Schema.CollectionType {
   attributes: {
     promotionName: Attribute.String & Attribute.Required;
     description: Attribute.String & Attribute.Required;
-    discountType: Attribute.Enumeration<['percentage', 'fixed']> &
+    discountType: Attribute.Enumeration<
+      ['T\u1EB7ng ti\u1EC1n', 'Chi\u1EBFt kh\u1EA5u h\u00F3a \u0111\u01A1n']
+    > &
       Attribute.Required;
     discountValue: Attribute.Decimal;
     startDate: Attribute.DateTime;
     endDate: Attribute.DateTime;
-    status: Attribute.Enumeration<['ACTIVE', 'INACTIVE', 'EXPIRED']> &
-      Attribute.Required;
-    ticket_prices: Attribute.Relation<
+    status: Attribute.Enumeration<
+      ['Ho\u1EA1t \u0111\u1ED9ng', 'Kh\u00F4ng ho\u1EA1t \u0111\u1ED9ng']
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'Ho\u1EA1t \u0111\u1ED9ng'>;
+    IDPromotion: Attribute.String & Attribute.DefaultTo<'MK'>;
+    detail_promotions: Attribute.Relation<
       'api::promotion.promotion',
       'oneToMany',
-      'api::ticket-price.ticket-price'
+      'api::detail-promotion.detail-promotion'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1022,6 +1227,51 @@ export interface ApiPromotionPromotion extends Schema.CollectionType {
   };
 }
 
+export interface ApiScheduleSchedule extends Schema.CollectionType {
+  collectionName: 'schedules';
+  info: {
+    singularName: 'schedule';
+    pluralName: 'schedules';
+    displayName: 'Schedule';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    IDSchedule: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'ML'>;
+    ngaydi: Attribute.DateTime & Attribute.Required;
+    ngayden: Attribute.DateTime;
+    MaTuyen: Attribute.Relation<
+      'api::schedule.schedule',
+      'manyToOne',
+      'api::trip.trip'
+    >;
+    BienSo: Attribute.Relation<
+      'api::schedule.schedule',
+      'manyToOne',
+      'api::bus.bus'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::schedule.schedule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::schedule.schedule',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiSeatSeat extends Schema.CollectionType {
   collectionName: 'seats';
   info: {
@@ -1034,15 +1284,21 @@ export interface ApiSeatSeat extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    seatNumber: Attribute.Integer;
-    status: Attribute.Enumeration<['available', 'reserved', 'booked']>;
-    bus: Attribute.Relation<'api::seat.seat', 'manyToOne', 'api::bus.bus'>;
+    seatNumber: Attribute.Integer & Attribute.Required & Attribute.Unique;
+    status: Attribute.Enumeration<
+      ['c\u00F2n tr\u1ED1ng', '\u0111ang ch\u1ECDn', '\u0111\u00E3 b\u00E1n']
+    >;
     tickets: Attribute.Relation<
       'api::seat.seat',
       'oneToMany',
       'api::ticket.ticket'
     >;
-    trips: Attribute.Relation<'api::seat.seat', 'oneToMany', 'api::trip.trip'>;
+    trip: Attribute.Relation<'api::seat.seat', 'manyToOne', 'api::trip.trip'>;
+    invoices: Attribute.Relation<
+      'api::seat.seat',
+      'manyToMany',
+      'api::invoice.invoice'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1092,11 +1348,6 @@ export interface ApiTicketTicket extends Schema.CollectionType {
       'oneToMany',
       'api::trip.trip'
     >;
-    ticket_prices: Attribute.Relation<
-      'api::ticket.ticket',
-      'oneToMany',
-      'api::ticket-price.ticket-price'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1121,26 +1372,21 @@ export interface ApiTicketPriceTicketPrice extends Schema.CollectionType {
     singularName: 'ticket-price';
     pluralName: 'ticket-prices';
     displayName: 'TicketPrice';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    price: Attribute.Decimal;
     startDate: Attribute.DateTime;
     endDate: Attribute.DateTime;
-    status: Attribute.Enumeration<['ACTIVE', 'INACTIVE', 'DEPRECATED']> &
-      Attribute.Required;
-    promotion: Attribute.Relation<
-      'api::ticket-price.ticket-price',
-      'manyToOne',
-      'api::promotion.promotion'
-    >;
-    ticket: Attribute.Relation<
-      'api::ticket-price.ticket-price',
-      'manyToOne',
-      'api::ticket.ticket'
-    >;
+    status: Attribute.Enumeration<
+      ['Ho\u1EA1t \u0111\u1ED9ng', 'Kh\u00F4ng ho\u1EA1t \u0111\u1ED9ng']
+    > &
+      Attribute.Required &
+      Attribute.DefaultTo<'Kh\u00F4ng ho\u1EA1t \u0111\u1ED9ng'>;
+    MaGia: Attribute.String & Attribute.Required & Attribute.DefaultTo<'MG'>;
+    Mota: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1171,33 +1417,48 @@ export interface ApiTripTrip extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    distance: Attribute.String & Attribute.Required;
-    travelTime: Attribute.String & Attribute.Required;
-    departureTime: Attribute.DateTime;
-    arrivalTime: Attribute.DateTime;
     ticket: Attribute.Relation<
       'api::trip.trip',
       'manyToOne',
       'api::ticket.ticket'
     >;
-    seat: Attribute.Relation<'api::trip.trip', 'manyToOne', 'api::seat.seat'>;
-    pickup_point: Attribute.Relation<
+    seats: Attribute.Relation<'api::trip.trip', 'oneToMany', 'api::seat.seat'>;
+    status: Attribute.Enumeration<
+      ['Ho\u1EA1t \u0111\u1ED9ng', 'Ng\u01B0ng ho\u1EA1t \u0111\u1ED9ng']
+    > &
+      Attribute.Required;
+    totalSeats: Attribute.Integer & Attribute.DefaultTo<34>;
+    invoices: Attribute.Relation<
+      'api::trip.trip',
+      'oneToMany',
+      'api::invoice.invoice'
+    >;
+    ExpectedTime: Attribute.Time & Attribute.Required;
+    detail_promotions: Attribute.Relation<
+      'api::trip.trip',
+      'oneToMany',
+      'api::detail-promotion.detail-promotion'
+    >;
+    MaTuyen: Attribute.String & Attribute.Required & Attribute.DefaultTo<'MT'>;
+    schedules: Attribute.Relation<
+      'api::trip.trip',
+      'oneToMany',
+      'api::schedule.schedule'
+    >;
+    detai_prices: Attribute.Relation<
+      'api::trip.trip',
+      'oneToMany',
+      'api::detai-price.detai-price'
+    >;
+    MaDiemDon: Attribute.Relation<
       'api::trip.trip',
       'manyToOne',
       'api::pickup-point.pickup-point'
     >;
-    drop_off_point: Attribute.Relation<
+    MaDiemTra: Attribute.Relation<
       'api::trip.trip',
       'manyToOne',
       'api::drop-off-point.drop-off-point'
-    >;
-    status: Attribute.Enumeration<
-      [
-        'HO\u1EA0T \u0110\u1ED8NG',
-        'KH\u00D4NG HO\u1EA0T \u0110\u1ED8NG',
-        'H\u1EBET H\u1EA0N',
-        'H\u1EE6Y'
-      ]
     >;
     departure_location_id: Attribute.Relation<
       'api::trip.trip',
@@ -1238,11 +1499,16 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::bus.bus': ApiBusBus;
+      'api::customer.customer': ApiCustomerCustomer;
+      'api::detai-price.detai-price': ApiDetaiPriceDetaiPrice;
+      'api::detail-promotion.detail-promotion': ApiDetailPromotionDetailPromotion;
       'api::drop-off-point.drop-off-point': ApiDropOffPointDropOffPoint;
+      'api::invoice.invoice': ApiInvoiceInvoice;
       'api::location.location': ApiLocationLocation;
       'api::payment.payment': ApiPaymentPayment;
       'api::pickup-point.pickup-point': ApiPickupPointPickupPoint;
       'api::promotion.promotion': ApiPromotionPromotion;
+      'api::schedule.schedule': ApiScheduleSchedule;
       'api::seat.seat': ApiSeatSeat;
       'api::ticket.ticket': ApiTicketTicket;
       'api::ticket-price.ticket-price': ApiTicketPriceTicketPrice;

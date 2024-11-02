@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "detai_prices",
+  "info": {
+    "singularName": "detai-price",
+    "pluralName": "detai-prices",
+    "displayName": "DetaiPrice",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "MaChiTietGia": {
+      "type": "string",
+      "default": "MCTG",
+      "required": true
+    },
+    "Gia": {
+      "type": "string",
+      "required": true
+    },
+    "trip": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::trip.trip",
+      "inversedBy": "detai_prices"
+    }
+  }
+}

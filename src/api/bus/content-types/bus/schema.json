@@ -4,24 +4,18 @@
   "info": {
     "singularName": "bus",
     "pluralName": "buses",
-    "displayName": "Bus"
+    "displayName": "Bus",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "busName": {
+    "BienSo": {
       "type": "string",
-      "required": true
-    },
-    "busType": {
-      "type": "enumeration",
-      "enum": [
-        "Giường nằm",
-        "Ghế ngồi"
-      ],
-      "required": true
+      "required": true,
+      "default": "BS"
     },
     "seatCount": {
       "type": "integer"
@@ -29,15 +23,24 @@
     "status": {
       "type": "enumeration",
       "enum": [
-        "active",
-        "inactive"
+        "Hoạt động",
+        "Không hoạt động"
       ]
     },
-    "seats": {
+    "busName": {
+      "type": "string",
+      "required": true
+    },
+    "schedules": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::seat.seat",
-      "mappedBy": "bus"
+      "target": "api::schedule.schedule",
+      "mappedBy": "BienSo"
+    },
+    "MaXe": {
+      "type": "string",
+      "required": true,
+      "default": "MX"
     }
   }
 }

@@ -20,11 +20,16 @@
       "type": "string",
       "required": true
     },
-    "trips": {
+    "MaTuyen": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::trip.trip",
-      "mappedBy": "pickup_point"
+      "mappedBy": "MaDiemDon"
+    },
+    "MaDiemDon": {
+      "type": "string",
+      "required": true,
+      "default": "MPP"
     }
   }
 }
