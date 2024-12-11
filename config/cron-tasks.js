@@ -16,7 +16,7 @@ module.exports = {
 
         // Lấy tất cả các chuyến xe
         const trips = await strapi.entityService.findMany("api::trip.trip");
-        console.log("Dữ liệu chuyến đi:", trips); // Kiểm tra cấu trúc dữ liệu
+        
 
         for (const trip of trips) {
           // Truy cập trực tiếp vào các thuộc tính của trip
@@ -90,7 +90,7 @@ module.exports = {
             populate: ["ticketPrices"],
           }
         );
-        console.log("Dữ liệu vé:", tickets);
+       
 
         const now = new Date();
         const nowVietnam = new Date(now.getTime() + 7 * 60 * 60 * 1000); // Cộng 7 giờ cho giờ VN

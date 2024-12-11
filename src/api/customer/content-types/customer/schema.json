@@ -4,7 +4,8 @@
   "info": {
     "singularName": "customer",
     "pluralName": "customers",
-    "displayName": "Customer"
+    "displayName": "Customer",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -20,11 +21,8 @@
       "type": "string",
       "required": true
     },
-    "Email": {
-      "type": "string"
-    },
     "DienThoai": {
-      "type": "integer"
+      "type": "biginteger"
     },
     "DiaChi": {
       "type": "string",
@@ -36,6 +34,33 @@
         "Nam",
         "Nữ"
       ]
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "Khách hàng"
+      ],
+      "default": "Khách hàng"
+    },
+    "admin_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "invoicesId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice.invoice",
+      "mappedBy": "customerId"
+    },
+    "customer_sale": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::customer-sale.customer-sale",
+      "inversedBy": "customers"
     }
   }
 }

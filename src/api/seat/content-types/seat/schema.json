@@ -37,11 +37,17 @@
       "target": "api::trip.trip",
       "inversedBy": "seats"
     },
-    "invoices": {
+    "seat_statuses": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::invoice.invoice",
-      "mappedBy": "seats"
+      "relation": "oneToMany",
+      "target": "api::seat-status.seat-status",
+      "mappedBy": "seat"
+    },
+    "bus": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::bus.bus",
+      "inversedBy": "seats"
     }
   }
 }

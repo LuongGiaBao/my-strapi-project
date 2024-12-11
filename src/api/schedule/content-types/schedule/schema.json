@@ -15,7 +15,8 @@
     "IDSchedule": {
       "type": "string",
       "required": true,
-      "default": "ML"
+      "default": "ML",
+      "unique": false
     },
     "ngaydi": {
       "type": "datetime",
@@ -36,6 +37,25 @@
       "relation": "manyToOne",
       "target": "api::bus.bus",
       "inversedBy": "schedules"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "Hoạt động",
+        "Ngưng hoạt động"
+      ]
+    },
+    "invoicesId": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice.invoice",
+      "mappedBy": "scheduleId"
+    },
+    "seat_statuses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::seat-status.seat-status",
+      "mappedBy": "schedule"
     }
   }
 }

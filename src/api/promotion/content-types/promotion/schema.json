@@ -12,24 +12,9 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "promotionName": {
-      "type": "string",
-      "required": true
-    },
     "description": {
       "type": "string",
       "required": true
-    },
-    "discountType": {
-      "type": "enumeration",
-      "enum": [
-        "Tặng tiền",
-        "Chiết khấu hóa đơn"
-      ],
-      "required": true
-    },
-    "discountValue": {
-      "type": "decimal"
     },
     "startDate": {
       "type": "datetime"
@@ -41,20 +26,27 @@
       "type": "enumeration",
       "enum": [
         "Hoạt động",
-        "Không hoạt động"
+        "Ngưng hoạt động"
       ],
       "required": true,
-      "default": "Hoạt động"
+      "default": "Ngưng hoạt động"
     },
     "IDPromotion": {
       "type": "string",
-      "default": "MK"
+      "default": "MKM",
+      "required": true
     },
     "detail_promotions": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::detail-promotion.detail-promotion",
       "mappedBy": "promotion"
+    },
+    "promotion_sale": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::promotion-sale.promotion-sale",
+      "inversedBy": "promotions"
     }
   }
 }

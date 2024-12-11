@@ -24,7 +24,7 @@
       "type": "enumeration",
       "enum": [
         "Hoạt động",
-        "Không hoạt động"
+        "Ngưng hoạt động"
       ]
     },
     "busName": {
@@ -41,6 +41,12 @@
       "type": "string",
       "required": true,
       "default": "MX"
+    },
+    "seats": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::seat.seat",
+      "mappedBy": "bus"
     }
   }
 }

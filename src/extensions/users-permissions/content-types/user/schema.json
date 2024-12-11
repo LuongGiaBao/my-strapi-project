@@ -77,17 +77,15 @@
       "target": "api::payment.payment",
       "mappedBy": "users_permissions_user"
     },
-    "phone": {
-      "type": "string"
-    },
-    "fullName": {
-      "type": "string"
-    },
-    "invoices": {
+    "customer": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::invoice.invoice",
-      "mappedBy": "users_permissions_user"
+      "relation": "oneToOne",
+      "target": "api::customer.customer"
+    },
+    "employee": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::employee.employee"
     }
   }
 }

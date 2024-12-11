@@ -4,7 +4,8 @@
   "info": {
     "singularName": "detail-promotion",
     "pluralName": "detail-promotions",
-    "displayName": "DetailPromotion"
+    "displayName": "DetailPromotion",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -22,10 +23,33 @@
       "target": "api::promotion.promotion",
       "inversedBy": "detail_promotions"
     },
-    "trip": {
+    "description": {
+      "type": "text"
+    },
+    "LoaiKhuyenMai": {
+      "type": "enumeration",
+      "enum": [
+        "Tặng tiền",
+        "Chiết khấu hóa đơn"
+      ],
+      "required": true
+    },
+    "TongTienHoaDon": {
+      "type": "decimal"
+    },
+    "SoTienTang": {
+      "type": "decimal"
+    },
+    "PhanTramChietKhau": {
+      "type": "integer"
+    },
+    "SoTienKhuyenMaiToiDa": {
+      "type": "decimal"
+    },
+    "promotion_sale": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::trip.trip",
+      "target": "api::promotion-sale.promotion-sale",
       "inversedBy": "detail_promotions"
     }
   }

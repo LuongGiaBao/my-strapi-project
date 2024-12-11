@@ -36,21 +36,9 @@
       "type": "integer",
       "default": 34
     },
-    "invoices": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::invoice.invoice",
-      "mappedBy": "trip"
-    },
     "ExpectedTime": {
       "type": "time",
       "required": true
-    },
-    "detail_promotions": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::detail-promotion.detail-promotion",
-      "mappedBy": "trip"
     },
     "MaTuyen": {
       "type": "string",
@@ -92,6 +80,12 @@
       "relation": "manyToOne",
       "target": "api::location.location",
       "inversedBy": "trips"
+    },
+    "detail_invoices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::detail-invoice.detail-invoice",
+      "mappedBy": "trip"
     }
   }
 }

@@ -17,15 +17,26 @@
       "default": "MCTG",
       "required": true
     },
-    "Gia": {
-      "type": "string",
-      "required": true
-    },
     "trip": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::trip.trip",
       "inversedBy": "detai_prices"
+    },
+    "ticket_price": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ticket-price.ticket-price",
+      "inversedBy": "detai_prices"
+    },
+    "Gia": {
+      "type": "decimal"
+    },
+    "detail_invoices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::detail-invoice.detail-invoice",
+      "mappedBy": "detai_price"
     }
   }
 }

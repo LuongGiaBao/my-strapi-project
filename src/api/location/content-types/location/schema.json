@@ -24,6 +24,11 @@
       "relation": "oneToMany",
       "target": "api::trip.trip",
       "mappedBy": "arrival_location_id"
+    },
+    "MaDiaDiem": {
+      "type": "string",
+      "default": "MDD",
+      "required": true
     }
   }
 }
